@@ -13,9 +13,32 @@ services:
       - rabbitmq
       - redis
       - elasticsearch
-    command: ["sh", "-c", "celery -A TaskMaster worker --loglevel=info & celery -A TaskMaster flower --port=5555 & gunicorn TaskMaster.wsgi:application --bind 0.0.0.0:8000"]
     ports:
       - "8000:8000"
+
+  celery-worker:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - db
+      - rabbitmq
+    command: ["celery", "-A", "celery_app", "worker", "--loglevel=info"]
+
+  flower:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - rabbitmq
+    command: ["celery", "-A", "celery_app", "flower", "--port=5555"]
+    ports:
       - "5555:5555"
 
   db:

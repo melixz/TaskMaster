@@ -7,5 +7,5 @@ from .models import Task
 def process_task(task_id):
     sleep(10)
     task = Task.objects.get(id=task_id)
-    task.status = 'completed'
+    task.status = "completed"
     task.save()

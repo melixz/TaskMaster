@@ -1,7 +1,7 @@
 from elasticsearch_dsl import Document, Text, Date
 from elasticsearch_dsl.connections import connections
 
-connections.create_connection(hosts=['http://elasticsearch:9200'])
+connections.create_connection(hosts=["http://elasticsearch:9200"])
 
 
 class TaskDocument(Document):
@@ -10,7 +10,7 @@ class TaskDocument(Document):
     created_at = Date()
 
     class Index:
-        name = 'tasks'
+        name = "tasks"
 
     def save(self, **kwargs):
         return super(TaskDocument, self).save(**kwargs)
