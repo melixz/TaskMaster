@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+      - elasticsearch
+    command: ["sh", "-c", "celery -A task_manager worker --loglevel=info & celery -A task_manager flower --port=5555 & gunicorn task_manager.wsgi:application --bind 0.0.0.0:8000"]
+    ports:
+      - "8000:8000"
+      - "5555:5555"
+
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+volumes:
+  pgdata:
