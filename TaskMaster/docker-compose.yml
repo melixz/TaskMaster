@@ -13,7 +13,7 @@ services:
       - rabbitmq
       - redis
       - elasticsearch
-    command: ["sh", "-c", "celery -A task_manager worker --loglevel=info & celery -A task_manager flower --port=5555 & gunicorn task_manager.wsgi:application --bind 0.0.0.0:8000"]
+    command: ["sh", "-c", "celery -A TaskMaster worker --loglevel=info & celery -A TaskMaster flower --port=5555 & gunicorn TaskMaster.wsgi:application --bind 0.0.0.0:8000"]
     ports:
       - "8000:8000"
       - "5555:5555"

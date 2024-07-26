@@ -101,6 +101,12 @@ DATABASES = {
 # CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'UTC'
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch:9200'
+    },
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
