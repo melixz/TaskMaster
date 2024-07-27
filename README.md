@@ -2,7 +2,9 @@
 
 ## Описание проекта
 
-`TaskMaster` - это система управления задачами, включающая API для управления задачами, асинхронную обработку задач, мониторинг задач, поиск задач и контейнеризацию приложения. Проект создан с использованием Django, Django REST Framework, Celery, RabbitMQ, Flower, Elasticsearch и Docker.
+`TaskMaster` - это система управления задачами, включающая API для управления задачами, асинхронную обработку задач,
+мониторинг задач, поиск задач и контейнеризацию приложения. Проект создан с использованием Django, Django REST
+Framework, Celery, RabbitMQ, Flower, Elasticsearch и Docker.
 
 ## Установка
 
@@ -30,11 +32,11 @@ pip install -r requirements.txt
    ```
 
 3. Взаимодействуйте с API через endpoints:
-   - Получение списка задач: `GET /api/tasks/`
-   - Создание задачи: `POST /api/tasks/`
-   - Обновление задачи: `PUT /api/tasks/{id}/`
-   - Удаление задачи: `DELETE /api/tasks/{id}/`
-   - Запуск обработки задачи: `POST /api/tasks/{id}/start_processing/`
+    - Получение списка задач: `GET /api/tasks/`
+    - Создание задачи: `POST /api/tasks/`
+    - Обновление задачи: `PUT /api/tasks/{id}/`
+    - Удаление задачи: `DELETE /api/tasks/{id}/`
+    - Запуск обработки задачи: `POST /api/tasks/{id}/start_processing/`
 
 4. Мониторинг Celery задач доступен по адресу: `http://localhost:5555`
 
@@ -42,6 +44,14 @@ pip install -r requirements.txt
    ```sh
    curl -X GET "localhost:9200/tasks/_search?q=title:НазваниеЗадачи"
    ```
+
+### Таблица сервисов
+
+| Сервис                     | Локальный хост          | Описание функций                                                              |
+|----------------------------|-------------------------|-------------------------------------------------------------------------------|
+| API задач                  | `http://localhost:8000` | Управление задачами: создание, чтение, обновление, удаление, запуск обработки |
+| Celery мониторинг (Flower) | `http://localhost:5555` | Мониторинг состояния задач и активности воркеров                              |
+| Elasticsearch              | `http://localhost:9200` | Поиск задач по названию и описанию                                            |
 
 ## Технологии
 
@@ -65,11 +75,13 @@ pip install -r requirements.txt
 
 ## Цель проекта
 
-Проект предназначен для управления задачами, автоматизации их обработки и обеспечения удобного интерфейса для мониторинга и поиска задач.
+Проект предназначен для управления задачами, автоматизации их обработки и обеспечения удобного интерфейса для
+мониторинга и поиска задач.
 
 ## Примеры API запросов
 
 ### Создание задачи
+
 ```sh
 curl -X POST http://localhost:8000/api/tasks/ \
 -H "Content-Type: application/json" \
@@ -77,11 +89,13 @@ curl -X POST http://localhost:8000/api/tasks/ \
 ```
 
 ### Получение списка задач
+
 ```sh
 curl -X GET http://localhost:8000/api/tasks/
 ```
 
 ### Обновление задачи
+
 ```sh
 curl -X PUT http://localhost:8000/api/tasks/1/ \
 -H "Content-Type: application/json" \
@@ -89,16 +103,19 @@ curl -X PUT http://localhost:8000/api/tasks/1/ \
 ```
 
 ### Удаление задачи
+
 ```sh
 curl -X DELETE http://localhost:8000/api/tasks/1/
 ```
 
 ### Запуск обработки задачи
+
 ```sh
 curl -X POST http://localhost:8000/api/tasks/1/start_processing/
 ```
 
 ### Поиск задач через Elasticsearch
+
 ```sh
 curl -X GET "localhost:9200/tasks/_search?q=title:НазваниеЗадачи"
 ```
@@ -106,8 +123,7 @@ curl -X GET "localhost:9200/tasks/_search?q=title:НазваниеЗадачи"
 ## Демонстрация работы Flower
 
 Для мониторинга Celery задач через Flower, откройте веб-браузер и перейдите по адресу:
+
 ```sh
 http://localhost:5555
 ```
-
-На этом интерфейсе вы сможете наблюдать текущее состояние задач, активность воркеров и другую важную информацию о работе Celery.
