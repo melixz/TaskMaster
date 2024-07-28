@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Task
 from .serializers import TaskSerializer
 from .tasks import process_task
+from elasticsearch_dsl import Search
 
 
 class TaskViewSet(viewsets.ModelViewSet):
@@ -24,3 +25,17 @@ class TaskViewSet(viewsets.ModelViewSet):
             {"status": "Task is not in pending state"},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+
+class TaskSearchView(viewsets.ViewSet):
+    def list(self, request):
+        query = request.query_params.get("q", "")
+        search = Search(index="tasks").query(
+            "multi_match", query=query, fields=["title", "description"]
+        )
+        response = search.execute()
+        results = [
+            {"id": hit.meta.id, "title": hit.title, "description": hit.description}
+            for hit in response
+        ]
+        return Response(results)

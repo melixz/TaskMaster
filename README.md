@@ -22,8 +22,8 @@ pip install -r requirements.txt
    POSTGRES_PASSWORD=ваш_пароль
    POSTGRES_DB=ваша_бд
    POSTGRES_HOST=ваш_хост
-   CELERY_BROKER_URL=redis://redis:6379/0
-   CELERY_RESULT_BACKEND=redis://redis:6379/0
+   CELERY_BROKER_URL=amqp://rabbitmq
+   CELERY_RESULT_BACKEND=rpc://
    ```
 
 2. Запустите Docker контейнеры:

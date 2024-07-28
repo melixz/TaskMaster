@@ -9,7 +9,6 @@ services:
     depends_on:
       - db
       - rabbitmq
-      - redis
       - elasticsearch
     ports:
       - "8000:8000"
@@ -51,11 +50,6 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
